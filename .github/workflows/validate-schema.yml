@@ -1,0 +1,55 @@
+name: Validate Data Schema
+
+on:
+  pull_request:
+    paths:
+      - 'data-source/**/*.json'
+      - '!data-source/schema.json'
+  push:
+    branches:
+      - main
+    paths:
+      - 'data-source/**/*.json'
+      - '!data-source/schema.json'
+
+jobs:
+  validate:
+    name: Validate JSON against Schema
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      
+      - name: Install ajv-cli
+        run: npm install -g ajv-cli@5.0.0
+      
+      - name: Validate JSON files
+        run: |
+          set -e
+          echo "Validating JSON files against schema..."
+          for file in data-source/*.json; do
+            if [ "$file" != "data-source/schema.json" ]; then
+              echo "Validating $file..."
+              ajv validate -s data-source/schema.json -d "$file" --strict=false
+              echo "✓ $file is valid"
+            fi
+          done
+          echo "All JSON files are valid!"
+      
+      - name: Comment on PR
+        if: failure() && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '❌ JSON validation failed. Please ensure your data files conform to the schema in `data-source/schema.json`.'
+            })
