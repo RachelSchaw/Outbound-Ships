@@ -1,0 +1,196 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Outbound Activity Data Schema",
+  "description": "Unified schema for tracking outbound launch, disclosure, and go-to-market activities",
+  "type": "object",
+  "required": ["id", "type", "product", "status", "created_date"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the activity"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "foundry-release",
+        "devmicrosoft-update",
+        "product-launch",
+        "feature-announcement",
+        "deprecation-notice",
+        "security-update"
+      ],
+      "description": "Type of outbound activity"
+    },
+    "product": {
+      "type": "object",
+      "required": ["name", "version"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Product or service name"
+        },
+        "version": {
+          "type": "string",
+          "description": "Version number (semantic versioning)"
+        },
+        "component": {
+          "type": "string",
+          "description": "Specific component if applicable"
+        }
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": ["draft", "in-review", "approved", "scheduled", "published", "archived"],
+      "description": "Current status of the activity"
+    },
+    "created_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When this entry was created (ISO 8601)"
+    },
+    "scheduled_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When this activity is scheduled to go live (ISO 8601)"
+    },
+    "published_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When this activity was actually published (ISO 8601)"
+    },
+    "title": {
+      "type": "string",
+      "description": "Title of the release, update, or announcement"
+    },
+    "summary": {
+      "type": "string",
+      "description": "Brief summary (2-3 sentences)"
+    },
+    "description": {
+      "type": "string",
+      "description": "Detailed description"
+    },
+    "changes": {
+      "type": "object",
+      "properties": {
+        "new_features": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {"type": "string"},
+              "description": {"type": "string"},
+              "impact": {"type": "string"}
+            }
+          }
+        },
+        "enhancements": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {"type": "string"},
+              "description": {"type": "string"}
+            }
+          }
+        },
+        "bug_fixes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "issue": {"type": "string"},
+              "resolution": {"type": "string"}
+            }
+          }
+        },
+        "breaking_changes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "change": {"type": "string"},
+              "migration_guide": {"type": "string"}
+            }
+          }
+        },
+        "deprecations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "feature": {"type": "string"},
+              "reason": {"type": "string"},
+              "alternative": {"type": "string"},
+              "removal_date": {"type": "string", "format": "date"}
+            }
+          }
+        },
+        "security_updates": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "severity": {"type": "string", "enum": ["critical", "high", "medium", "low"]},
+              "cve": {"type": "string"},
+              "description": {"type": "string"}
+            }
+          }
+        }
+      }
+    },
+    "stakeholders": {
+      "type": "object",
+      "properties": {
+        "owner": {"type": "string"},
+        "product_manager": {"type": "string"},
+        "engineering_lead": {"type": "string"},
+        "documentation_lead": {"type": "string"},
+        "reviewers": {
+          "type": "array",
+          "items": {"type": "string"}
+        }
+      }
+    },
+    "channels": {
+      "type": "object",
+      "properties": {
+        "foundry_release_notes": {"type": "boolean"},
+        "devmicrosoft_changelog": {"type": "boolean"},
+        "blog_post": {"type": "boolean"},
+        "email_notification": {"type": "boolean"},
+        "social_media": {"type": "boolean"},
+        "documentation_update": {"type": "boolean"}
+      }
+    },
+    "links": {
+      "type": "object",
+      "properties": {
+        "documentation": {"type": "string", "format": "uri"},
+        "release_notes": {"type": "string", "format": "uri"},
+        "blog_post": {"type": "string", "format": "uri"},
+        "discussion": {"type": "string", "format": "uri"},
+        "repository": {"type": "string", "format": "uri"}
+      }
+    },
+    "metrics": {
+      "type": "object",
+      "properties": {
+        "views": {"type": "integer"},
+        "downloads": {"type": "integer"},
+        "feedback_score": {"type": "number"},
+        "adoption_rate": {"type": "number"}
+      }
+    },
+    "tags": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Tags for categorization and search"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Additional notes or context"
+    }
+  }
+}
