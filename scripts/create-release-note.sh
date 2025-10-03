@@ -29,9 +29,16 @@ cp "$OUTPUT_DIR/TEMPLATE.md" "$OUTPUT_FILE"
 # Get current date in ISO format
 CURRENT_DATE=$(date -u +"%Y-%m-%d")
 
-# Replace placeholders
-sed -i "s/\[VERSION\]/$VERSION/g" "$OUTPUT_FILE"
-sed -i "s/\[YYYY-MM-DD\]/$CURRENT_DATE/g" "$OUTPUT_FILE"
+# Replace placeholders (cross-platform compatible)
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    # macOS
+    sed -i "" "s/\[VERSION\]/$VERSION/g" "$OUTPUT_FILE"
+    sed -i "" "s/\[YYYY-MM-DD\]/$CURRENT_DATE/g" "$OUTPUT_FILE"
+else
+    # Linux
+    sed -i "s/\[VERSION\]/$VERSION/g" "$OUTPUT_FILE"
+    sed -i "s/\[YYYY-MM-DD\]/$CURRENT_DATE/g" "$OUTPUT_FILE"
+fi
 
 echo "✓ Created release note: $OUTPUT_FILE"
 echo "Next steps:"

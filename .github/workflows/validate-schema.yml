@@ -27,21 +27,17 @@ jobs:
           node-version: '20'
       
       - name: Install ajv-cli
-        run: npm install -g ajv-cli
+        run: npm install -g ajv-cli@5.0.0
       
       - name: Validate JSON files
         run: |
+          set -e
           echo "Validating JSON files against schema..."
           for file in data-source/*.json; do
             if [ "$file" != "data-source/schema.json" ]; then
               echo "Validating $file..."
               ajv validate -s data-source/schema.json -d "$file" --strict=false
-              if [ $? -eq 0 ]; then
-                echo "✓ $file is valid"
-              else
-                echo "✗ $file is invalid"
-                exit 1
-              fi
+              echo "✓ $file is valid"
             fi
           done
           echo "All JSON files are valid!"

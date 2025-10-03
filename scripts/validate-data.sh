@@ -27,14 +27,12 @@ fi
 # Install ajv-cli if not already installed
 if ! command -v ajv &> /dev/null; then
     echo "Installing ajv-cli..."
-    npm install -g ajv-cli
+    npm install -g ajv-cli@5.0.0
 fi
 
 # Validate
 echo "Validating $JSON_FILE against $SCHEMA_FILE..."
-ajv validate -s "$SCHEMA_FILE" -d "$JSON_FILE" --strict=false
-
-if [ $? -eq 0 ]; then
+if ajv validate -s "$SCHEMA_FILE" -d "$JSON_FILE" --strict=false; then
     echo "✓ Validation successful!"
 else
     echo "✗ Validation failed!"

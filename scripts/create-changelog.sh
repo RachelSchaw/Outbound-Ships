@@ -40,9 +40,19 @@ fi
 # Copy template and replace placeholders
 cp "$OUTPUT_DIR/TEMPLATE.md" "$OUTPUT_FILE"
 
-# Replace placeholders
-sed -i "s/\[YYYY-MM-DD\]/$CURRENT_DATE/g" "$OUTPUT_FILE"
-sed -i "s/\[Content\/Platform\/API\/Tool\/Deprecation\/Issue\]/${CATEGORY^}/g" "$OUTPUT_FILE"
+# Replace placeholders (cross-platform compatible)
+# Capitalize first letter of category (portable method)
+CATEGORY_CAPITALIZED="$(echo "${CATEGORY:0:1}" | tr '[:lower:]' '[:upper:]')${CATEGORY:1}"
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    # macOS
+    sed -i "" "s/\[YYYY-MM-DD\]/$CURRENT_DATE/g" "$OUTPUT_FILE"
+    sed -i "" "s/\[Content\/Platform\/API\/Tool\/Deprecation\/Issue\]/$CATEGORY_CAPITALIZED/g" "$OUTPUT_FILE"
+else
+    # Linux
+    sed -i "s/\[YYYY-MM-DD\]/$CURRENT_DATE/g" "$OUTPUT_FILE"
+    sed -i "s/\[Content\/Platform\/API\/Tool\/Deprecation\/Issue\]/$CATEGORY_CAPITALIZED/g" "$OUTPUT_FILE"
+fi
 
 echo "✓ Created changelog entry: $OUTPUT_FILE"
 echo "Next steps:"
