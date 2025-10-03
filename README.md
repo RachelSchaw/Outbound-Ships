@@ -54,6 +54,8 @@ Initiatives to modernize processes and migrate from legacy systems:
 
 ## Quick Start
 
+**New here?** Check out the [Quick Start Guide](./QUICKSTART.md) for step-by-step instructions!
+
 ### For Release Note Authors
 
 1. Navigate to the appropriate directory (`foundry-release-notes/` or `devmicrosoft-changelog/`)
