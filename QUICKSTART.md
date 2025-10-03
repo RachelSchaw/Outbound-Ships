@@ -19,7 +19,7 @@ Welcome to the Outbound Ships repository! This guide will help you get started q
    - Validate: `./scripts/validate-data.sh your-file.json`
 
 4. **Submit for review**:
-   - Create an issue using the [Foundry Release template](.github/ISSUE_TEMPLATE/foundry-release.md)
+   - Create an issue using the [Foundry Release template](.github/ISSUE_TEMPLATE/foundry-release.md) (maintainers will add appropriate labels)
    - Create a pull request with your changes
 
 ### I want to create a Dev.Microsoft.Com changelog entry
@@ -33,7 +33,7 @@ Welcome to the Outbound Ships repository! This guide will help you get started q
 2. **Edit the generated file** with your changelog details
 
 3. **Submit for review**:
-   - Create an issue using the [Changelog template](.github/ISSUE_TEMPLATE/devmicrosoft-changelog.md)
+   - Create an issue using the [Dev.Microsoft.Com Changelog template](.github/ISSUE_TEMPLATE/devmicrosoft-changelog.md)
    - Create a pull request with your changes
 
 ### I want to contribute to migration efforts
@@ -72,11 +72,11 @@ cat data-source/example.json
 
 ### Create a new issue
 
-Browse templates in `.github/ISSUE_TEMPLATE/`:
-- `foundry-release.md` - For release notes
-- `devmicrosoft-changelog.md` - For changelog entries
-- `migration-task.md` - For migration work
-- `general-issue.md` - For everything else
+Browse templates in `.github/ISSUE_TEMPLATE/` (4 templates available):
+- `foundry-release.md` - For Foundry release notes
+- `devmicrosoft-changelog.md` - For Dev.Microsoft.Com changelog entries
+- `migration-task.md` - For migration and modernization work
+- `general-issue.md` - For questions, bugs, and other topics
 
 ## File Locations
 
@@ -91,7 +91,7 @@ Browse templates in `.github/ISSUE_TEMPLATE/`:
 
 ## Getting Help
 
-- **General questions**: Create an issue with the `question` label
+- **General questions**: Create an issue using the [General Issue template](.github/ISSUE_TEMPLATE/general-issue.md)
 - **Documentation**: Check README files in each directory
 - **Contributing guidelines**: See [CONTRIBUTING.md](CONTRIBUTING.md)
 - **Detailed information**: See [README.md](README.md)
@@ -120,7 +120,7 @@ Creating Content → Use Template → Fill Details → Validate → Submit PR �
 - ✅ Update documentation when needed
 - ❌ Don't skip validation
 - ❌ Don't bypass the review process
-- ❌ Don't commit directly to main
+- ❌ Don't commit directly to main (recommended: use pull requests)
 
 ## Next Steps
 
